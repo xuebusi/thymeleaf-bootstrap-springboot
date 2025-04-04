@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <h1 class="display-1 text-success">商品首页</h1>
+
+    <!-- 搜索框 -->
+    <form class="mb-3" method="get" action="/product/index.html">
+        <div class="input-group">
+            <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="输入商品名称搜索">
+            <button class="btn btn-primary" type="submit">搜索</button>
+        </div>
+    </form>
+
+    <!-- 商品表格 -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">产品ID</th>
+            <th scope="col">产品名称</th>
+            <th scope="col">产品价格</th>
+            <th scope="col">产品数量</th>
+            <th scope="col">创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <th scope="row" th:text="${product.productId}"></th>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.productPrice}"></td>
+            <td th:text="${product.productStock}"></td>
+            <td th:text="${#dates.format(product.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 分页 -->
+    <nav>
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/product/index.html(page=${currentPage - 1}, keyword=${keyword})}">上一页</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/product/index.html(page=${i}, keyword=${keyword})}" th:text="${i}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{/product/index.html(page=${currentPage + 1}, keyword=${keyword})}">下一页</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
