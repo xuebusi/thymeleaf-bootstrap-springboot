@@ -1,8 +1,8 @@
 package com.example.thymeleaf.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.thymeleaf.model.Product;
-import com.example.thymeleaf.service.ProductService;
+import com.example.thymeleaf.model.Article;
+import com.example.thymeleaf.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/article")
+public class ArticleController {
     @Resource
-    private ProductService productService;
+    private ArticleService articleService;
 
     @GetMapping({"", "index.html"})
     public String index(
@@ -23,13 +23,13 @@ public class ProductController {
             @RequestParam(value = "keyword", required = false) String keyword,
             Model model) {
 
-        Page<Product> productPage = productService.getProducts(page, size, keyword);
+        Page<Article> articlePage = articleService.getProducts(page, size, keyword);
 
-        model.addAttribute("products", productPage.getRecords());
+        model.addAttribute("articles", articlePage.getRecords());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getPages());
+        model.addAttribute("totalPages", articlePage.getPages());
         model.addAttribute("keyword", keyword);
 
-        return "/product/index";
+        return "/article/index";
     }
 }
