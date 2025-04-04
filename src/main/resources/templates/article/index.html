@@ -9,7 +9,7 @@
 
 <body>
 <div class="container">
-    <h1 class="display-1 text-success">文章首页</h1>
+    <h1 class="display-1">文章首页</h1>
 
     <!-- 搜索框 -->
     <form class="mb-3" method="get" action="/article/index.html">
@@ -25,7 +25,6 @@
         <tr>
             <th scope="col">文章ID</th>
             <th scope="col">文章名称</th>
-            <th scope="col">文章内容</th>
             <th scope="col">作者</th>
             <th scope="col">浏览次数</th>
             <th scope="col">创建时间</th>
@@ -35,10 +34,10 @@
         <tr th:each="article : ${articles}">
             <th scope="row" th:text="${article.articleId}"></th>
             <td th:text="${article.articleName}"></td>
-            <td th:utext="${article.articleContent}"></td>
             <td th:text="${article.articleAuthor}"></td>
             <td th:text="${article.previewCount}"></td>
-            <td th:text="${#dates.format(article.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${#dates.format(article.createTime, 'yyyy-MM-dd')}"></td>
+            <td><a class="btn btn-primary" th:href="@{'/article/' + ${article.articleId}}" role="button">详情</a></td>
         </tr>
         </tbody>
     </table>

@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,7 +17,7 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping({"", "index.html"})
+    @GetMapping({"", "/", "index.html"})
     public String index(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
@@ -31,5 +32,12 @@ public class ArticleController {
         model.addAttribute("keyword", keyword);
 
         return "/article/index";
+    }
+
+    @GetMapping({"/{articleId}", "/{articleId}/"})
+    public String detail(@PathVariable("articleId") Long articleId, Model model) {
+        Article article = articleService.getById(articleId);
+        model.addAttribute("article", article);
+        return "/article/detail";
     }
 }
