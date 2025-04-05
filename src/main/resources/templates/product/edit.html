@@ -14,6 +14,30 @@
 <!-- 页面主要内容 -->
 <main class="container my-5 min-vh-100">
     <h1 class="display-5">编辑商品</h1>
+    <form method="post" th:action="'/product/update/' + ${productId}" enctype="multipart/form-data" th:object="${vo}">
+        <div class="mb-3">
+            <label for="productName" class="form-label">产品名称</label>
+            <input type="text" th:field="${vo.productName}" class="form-control text-secondary" id="productName">
+        </div>
+        <div class="mb-3">
+            <label for="productPrice" class="form-label">产品价格</label>
+            <input type="text" th:field="${vo.productPrice}" class="form-control text-secondary" id="productPrice">
+        </div>
+        <div class="mb-3">
+            <label for="productStock" class="form-label">产品数量</label>
+            <input type="text" th:field="${vo.productStock}" class="form-control text-secondary" id="productStock">
+        </div>
+        <div>
+            <label for="productImg" class="form-label">产品图片</label>
+        </div>
+        <div class="mb-3">
+            <img th:src="${vo.productImg}" th:alt="${vo.productName}" width="150">
+        </div>
+        <div class="mb-3">
+            <input type="file" th:field="${vo.productImg}" class="form-control" id="productImg">
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
 </main>
 
 <!-- 插入页脚 -->

@@ -7,9 +7,7 @@ import com.example.thymeleaf.service.ProductService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/product")
@@ -40,9 +38,28 @@ public class ProductController {
         return "/product/create";
     }
 
-    @GetMapping("/edit")
-    public String toEdit(Model model) {
-        model.addAttribute("vo", new ProductVO());
+    @GetMapping("/edit/{id}")
+    public String toEdit(@PathVariable("id") String id, Model model) {
+        Product product = productService.getById(id);
+        model.addAttribute("productId", product.getProductId());
+
+        ProductVO vo = new ProductVO();
+        vo.setProductName(product.getProductName());
+        vo.setProductPrice(product.getProductPrice());
+        vo.setProductStock(product.getProductStock());
+
+        model.addAttribute("vo", vo);
         return "/product/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") Long id, @ModelAttribute ProductVO vo) {
+        Product product = new Product();
+        product.setProductId(id);
+        product.setProductName(vo.getProductName());
+        product.setProductPrice(vo.getProductPrice());
+        product.setProductStock(vo.getProductStock());
+        productService.updateById(product);
+        return "redirect:/product";
     }
 }

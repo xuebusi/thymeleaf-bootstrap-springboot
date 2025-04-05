@@ -4,12 +4,12 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
 public class ProductVO {
-    @NotEmpty(message = "产品图片不能为空")
-    private String productImg;
+    private MultipartFile productImg;
 
     @NotEmpty(message = "产品名称不能为空")
     private String productName;
@@ -24,11 +24,11 @@ public class ProductVO {
     @Max(value = 9999, message = "产品数量不能高于9999")
     private Integer productStock;
 
-    public String getProductImg() {
+    public MultipartFile getProductImg() {
         return productImg;
     }
 
-    public void setProductImg(String productImg) {
+    public void setProductImg(MultipartFile productImg) {
         this.productImg = productImg;
     }
 

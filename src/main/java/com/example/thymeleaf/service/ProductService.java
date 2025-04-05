@@ -3,13 +3,14 @@ package com.example.thymeleaf.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.thymeleaf.mapper.ProductMapper;
 import com.example.thymeleaf.model.Product;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductService {
+public class ProductService extends ServiceImpl<ProductMapper, Product> {
     @Resource
     private ProductMapper productMapper;
 
