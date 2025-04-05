@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="article : ${articles}">
+            <tr th:each="article : ${articles}" class="align-middle">
                 <th scope="row" th:text="${article.articleId}"></th>
                 <td th:text="${article.articleName}"></td>
                 <td th:text="${article.articleAuthor}"></td>
