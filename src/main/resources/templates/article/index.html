@@ -8,55 +8,70 @@
 </head>
 
 <body>
-<div class="container">
-    <h1 class="display-1">文章首页</h1>
+<!-- 插入页头 -->
+<div th:replace="~{layout/header :: main-header(siteName='THYMELEAF')}"></div>
 
-    <!-- 搜索框 -->
-    <form class="mb-3" method="get" action="/article/index.html">
-        <div class="input-group">
-            <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="输入文章名称搜索">
-            <button class="btn btn-primary" type="submit">搜索</button>
-        </div>
-    </form>
+<!-- 页面主要内容 -->
+<main class="container my-5">
+    <div class="container">
+        <h1 class="display-5">文章首页</h1>
 
-    <!-- 文章表格 -->
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">文章ID</th>
-            <th scope="col">文章名称</th>
-            <th scope="col">作者</th>
-            <th scope="col">浏览次数</th>
-            <th scope="col">创建时间</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="article : ${articles}">
-            <th scope="row" th:text="${article.articleId}"></th>
-            <td th:text="${article.articleName}"></td>
-            <td th:text="${article.articleAuthor}"></td>
-            <td th:text="${article.previewCount}"></td>
-            <td th:text="${#dates.format(article.createTime, 'yyyy-MM-dd')}"></td>
-            <td><a class="btn btn-primary" th:href="@{'/article/' + ${article.articleId}}" role="button">详情</a></td>
-        </tr>
-        </tbody>
-    </table>
+        <!-- 搜索框 -->
+        <form class="mb-3" method="get" action="/article/index.html">
+            <div class="input-group">
+                <input type="text" class="form-control" name="keyword" th:value="${keyword}"
+                       placeholder="输入文章名称搜索">
+                <button class="btn btn-primary" type="submit">搜索</button>
+            </div>
+        </form>
 
-    <!-- 分页 -->
-    <nav>
-        <ul class="pagination">
-            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a class="page-link" th:href="@{/article/index.html(page=${currentPage - 1}, keyword=${keyword})}">上一页</a>
-            </li>
-            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
-                <a class="page-link" th:href="@{/article/index.html(page=${i}, keyword=${keyword})}" th:text="${i}"></a>
-            </li>
-            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{/article/index.html(page=${currentPage + 1}, keyword=${keyword})}">下一页</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+        <!-- 文章表格 -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">文章ID</th>
+                <th scope="col">文章名称</th>
+                <th scope="col">作者</th>
+                <th scope="col">浏览次数</th>
+                <th scope="col">创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="article : ${articles}">
+                <th scope="row" th:text="${article.articleId}"></th>
+                <td th:text="${article.articleName}"></td>
+                <td th:text="${article.articleAuthor}"></td>
+                <td th:text="${article.previewCount}"></td>
+                <td th:text="${#dates.format(article.createTime, 'yyyy-MM-dd')}"></td>
+                <td><a class="btn btn-outline-primary" th:href="@{'/article/' + ${article.articleId}}"
+                       role="button">详情</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 分页 -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/article/index.html(page=${currentPage - 1}, keyword=${keyword})}">上一页</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/article/index.html(page=${i}, keyword=${keyword})}"
+                       th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/article/index.html(page=${currentPage + 1}, keyword=${keyword})}">下一页</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</main>
+
+<!-- 插入页脚 -->
+<div th:replace="~{layout/footer :: main-footer}"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
 </body>

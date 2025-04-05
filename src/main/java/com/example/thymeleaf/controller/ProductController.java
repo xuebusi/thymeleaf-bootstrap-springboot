@@ -2,6 +2,7 @@ package com.example.thymeleaf.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.thymeleaf.model.Product;
+import com.example.thymeleaf.model.ProductVO;
 import com.example.thymeleaf.service.ProductService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
@@ -31,5 +32,17 @@ public class ProductController {
         model.addAttribute("keyword", keyword);
 
         return "/product/index";
+    }
+
+    @GetMapping("/create")
+    public String toCreate(Model model) {
+        model.addAttribute("vo", new ProductVO());
+        return "/product/create";
+    }
+
+    @GetMapping("/edit")
+    public String toEdit(Model model) {
+        model.addAttribute("vo", new ProductVO());
+        return "/product/edit";
     }
 }
