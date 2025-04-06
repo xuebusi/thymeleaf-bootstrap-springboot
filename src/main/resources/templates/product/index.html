@@ -45,7 +45,7 @@
                 <td th:text="${product.productPrice}+'元'"></td>
                 <td th:text="${product.productStock}"></td>
                 <td>
-                    <img src="/images/baidu.png" th:alt="${product.productName}" width="100">
+                    <img th:src="'/images/' + ${product.getProductImg()}" th:alt="${product.productName}" width="100">
                 </td>
                 <td th:text="${#dates.format(product.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>

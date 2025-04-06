@@ -28,13 +28,13 @@
             <input type="text" th:field="${vo.productStock}" class="form-control text-secondary" id="productStock">
         </div>
         <div>
-            <label for="productImg" class="form-label">产品图片</label>
+            <label for="imageFile" class="form-label">产品图片</label>
         </div>
         <div class="mb-3">
-            <img th:src="${vo.productImg}" th:alt="${vo.productName}" width="150">
+            <img th:src="'/images/' + ${productImg}" th:alt="${vo.productName}" width="150">
         </div>
         <div class="mb-3">
-            <input type="file" th:field="${vo.productImg}" class="form-control" id="productImg">
+            <input type="file" th:field="${vo.imageFile}" class="form-control" id="imageFile">
         </div>
         <button type="submit" class="btn btn-primary">提交</button>
     </form>

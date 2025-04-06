@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 
 public class ProductVO {
-    private MultipartFile productImg;
+    private MultipartFile imageFile;
 
     @NotEmpty(message = "产品名称不能为空")
     private String productName;
@@ -24,12 +24,12 @@ public class ProductVO {
     @Max(value = 9999, message = "产品数量不能高于9999")
     private Integer productStock;
 
-    public MultipartFile getProductImg() {
-        return productImg;
+    public MultipartFile getImageFile() {
+        return imageFile;
     }
 
-    public void setProductImg(MultipartFile productImg) {
-        this.productImg = productImg;
+    public void setImageFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
     }
 
     public String getProductName() {
