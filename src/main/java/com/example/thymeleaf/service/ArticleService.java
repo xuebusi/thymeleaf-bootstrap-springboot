@@ -14,7 +14,7 @@ public class ArticleService extends ServiceImpl<ArticleMapper, Article> {
     @Resource
     private ArticleMapper articleMapper;
 
-    public Page<Article> getProducts(int page, int size, String articleName) {
+    public Page<Article> getArticles(int page, int size, String articleName) {
         Page<Article> pageRequest = new Page<>(page, size);
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
 

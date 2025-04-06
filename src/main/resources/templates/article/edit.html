@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>修改文章</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- 插入页头 -->
+<div th:replace="~{layout/header :: main-header(siteName='THYMELEAF')}"></div>
+
+<!-- 页面主要内容 -->
+<main class="container my-5 min-vh-100">
+    <h1 class="display-5">修改文章</h1>
+    <form method="post" th:action="@{/article/update/{id}(id=${article.articleId})}" th:object="${article}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="articleName" class="form-label">文章名称</label>
+            <input type="text" th:field="*{articleName}" class="form-control text-secondary" id="articleName">
+        </div>
+        <div class="mb-3">
+            <label for="articleContent" class="form-label">文章内容</label>
+            <textarea th:field="*{articleContent}" class="form-control text-secondary" id="articleContent" rows="5"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="articleAuthor" class="form-label">文章作者</label>
+            <input type="text" th:field="*{articleAuthor}" class="form-control text-secondary" id="articleAuthor">
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+</main>
+
+<!-- 插入页脚 -->
+<div th:replace="~{layout/footer :: main-footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

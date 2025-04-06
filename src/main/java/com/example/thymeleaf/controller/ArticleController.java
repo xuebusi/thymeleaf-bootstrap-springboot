@@ -6,10 +6,7 @@ import com.example.thymeleaf.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/article")
@@ -24,7 +21,7 @@ public class ArticleController {
             @RequestParam(value = "keyword", required = false) String keyword,
             Model model) {
 
-        Page<Article> articlePage = articleService.getProducts(page, size, keyword);
+        Page<Article> articlePage = articleService.getArticles(page, size, keyword);
 
         model.addAttribute("articles", articlePage.getRecords());
         model.addAttribute("currentPage", page);
@@ -39,5 +36,31 @@ public class ArticleController {
         Article article = articleService.getById(articleId);
         model.addAttribute("article", article);
         return "/article/detail";
+    }
+
+    @GetMapping("/create")
+    public String toCreate(Model model) {
+        model.addAttribute("article", new Article());
+        return "/article/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Article article) {
+        articleService.save(article);
+        return "redirect:/article";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String toEdit(@PathVariable("id") Long id, Model model) {
+        Article article = articleService.getById(id);
+        model.addAttribute("article", article);
+        return "/article/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable("id") Long id, @ModelAttribute Article article) {
+        article.setArticleId(id);
+        articleService.updateById(article);
+        return "redirect:/article";
     }
 }
