@@ -14,27 +14,26 @@
 <!-- 页面主要内容 -->
 <main class="container my-5 min-vh-100">
     <h1 class="display-5">编辑商品</h1>
-    <form method="post" th:action="'/product/update/' + ${productId}" enctype="multipart/form-data" th:object="${vo}">
+    <form method="post" th:action="'/product/update/' + ${product.productId}" enctype="multipart/form-data" th:object="${product}">
         <div class="mb-3">
             <label for="productName" class="form-label">产品名称</label>
-            <input type="text" th:field="${vo.productName}" class="form-control text-secondary" id="productName">
+            <input type="text" th:field="*{productName}" class="form-control text-secondary" id="productName">
+            <div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="productPrice" class="form-label">产品价格</label>
-            <input type="text" th:field="${vo.productPrice}" class="form-control text-secondary" id="productPrice">
+            <input type="text" th:field="*{productPrice}" class="form-control text-secondary" id="productPrice">
+            <div th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="productStock" class="form-label">产品数量</label>
-            <input type="text" th:field="${vo.productStock}" class="form-control text-secondary" id="productStock">
-        </div>
-        <div>
-            <label for="imageFile" class="form-label">产品图片</label>
+            <input type="text" th:field="*{productStock}" class="form-control text-secondary" id="productStock">
+            <div th:if="${#fields.hasErrors('productStock')}" th:errors="*{productStock}" class="text-danger"></div>
         </div>
         <div class="mb-3">
-            <img th:src="'/images/' + ${productImg}" th:alt="${vo.productName}" width="150">
-        </div>
-        <div class="mb-3">
-            <input type="file" th:field="${vo.imageFile}" class="form-control" id="imageFile">
+            <label for="productImg" class="form-label">产品图片</label>
+            <input type="text" th:field="*{productImg}" class="form-control text-secondary" id="productImg">
+            <div th:if="${#fields.hasErrors('productImg')}" th:errors="*{productImg}" class="text-danger"></div>
         </div>
         <button type="submit" class="btn btn-primary">提交</button>
     </form>

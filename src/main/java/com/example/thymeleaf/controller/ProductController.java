@@ -1,26 +1,15 @@
 package com.example.thymeleaf.controller;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.thymeleaf.model.Product;
-import com.example.thymeleaf.model.ProductVO;
 import com.example.thymeleaf.service.ProductService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Date;
-
-@Slf4j
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -46,60 +35,36 @@ public class ProductController {
 
     @GetMapping("/create")
     public String toCreate(Model model) {
-        model.addAttribute("vo", new ProductVO());
+        model.addAttribute("product", new Product());
         return "/product/create";
     }
 
     @GetMapping("/edit/{id}")
-    public String toEdit(@PathVariable("id") String id, Model model) {
+    public String toEdit(@PathVariable("id") Long id, Model model) {
         Product product = productService.getById(id);
-        model.addAttribute("productId", product.getProductId());
-        model.addAttribute("productImg", product.getProductImg());
-
-        ProductVO vo = new ProductVO();
-        vo.setProductName(product.getProductName());
-        vo.setProductPrice(product.getProductPrice());
-        vo.setProductStock(product.getProductStock());
-
-        model.addAttribute("vo", vo);
+        model.addAttribute("product", product);
         return "/product/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, @ModelAttribute ProductVO vo) {
-        Product product = productService.getById(id);
-        if (StringUtils.isNotBlank(vo.getProductName())) {
-            product.setProductName(vo.getProductName());
+    public String update(@PathVariable("id") Long id, @Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            product.setProductId(id);
+            model.addAttribute("product", product);
+            return "/product/edit";
         }
-        if (vo.getProductPrice() != null) {
-            product.setProductPrice(vo.getProductPrice());
-        }
-        if (vo.getProductStock() != null) {
-            product.setProductStock(vo.getProductStock());
-        }
-        if (!vo.getImageFile().isEmpty()) {
-            String uploadDir = "public/images/";
-            Path oldPath = Paths.get(uploadDir + product.getProductImg());
-            try {
-                Files.delete(oldPath);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-
-            MultipartFile image = vo.getImageFile();
-            Date createdAt = new Date();
-            String storageFileName = createdAt.getTime() + "_" + image.getOriginalFilename();
-
-            try (InputStream in = image.getInputStream()) {
-                Files.copy(in, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                log.error(e.getLocalizedMessage());
-            }
-
-            product.setProductImg(storageFileName);
-        }
-
+        product.setProductId(id);
         productService.updateById(product);
+        return "redirect:/product";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("product", product);
+            return "/product/create";
+        }
+        productService.save(product);
         return "redirect:/product";
     }
 }

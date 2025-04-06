@@ -15,6 +15,8 @@
 <main class="container my-5">
     <div>
         <h1 class="display-5">商品首页</h1>
+        <!-- 添加商品按钮 -->
+        <a th:href="@{/product/create}" class="btn btn-primary mb-3">添加商品</a>
 
         <!-- 搜索框 -->
         <form class="mb-3" method="get" action="/product/index.html">
@@ -45,12 +47,12 @@
                 <td th:text="${product.productPrice}+'元'"></td>
                 <td th:text="${product.productStock}"></td>
                 <td>
-                    <img th:src="'/images/' + ${product.getProductImg()}" th:alt="${product.productName}" width="100">
+                    <img src="/images/baidu.png" th:alt="${product.productName}" width="100">
                 </td>
                 <td th:text="${#dates.format(product.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
                     <a th:href="'/product/edit/' + ${product.productId}" role="button" class="btn btn-outline-primary btn-sm">编辑</a>
-<!--                    <a th:href="'/product/delete/' + ${product.productId}">删除</a>-->
+                    <!--                    <a th:href="'/product/delete/' + ${product.productId}">删除</a>-->
                 </td>
             </tr>
             </tbody>
