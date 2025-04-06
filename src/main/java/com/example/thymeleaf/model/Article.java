@@ -3,6 +3,7 @@ package com.example.thymeleaf.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Date;
 
@@ -10,9 +11,16 @@ import java.util.Date;
 public class Article {
     @TableId(type = IdType.AUTO)
     private Long articleId;
+
+    @NotEmpty(message = "文章名称不能为空")
     private String articleName;
+
+    @NotEmpty(message = "文章内容不能为空")
     private String articleContent;
+
+    @NotEmpty(message = "文章作者不能为空")
     private String articleAuthor;
+
     private Integer previewCount;
     private Date createTime;
 

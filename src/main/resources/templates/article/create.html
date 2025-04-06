@@ -18,14 +18,17 @@
         <div class="mb-3">
             <label for="articleName" class="form-label">文章名称</label>
             <input type="text" th:field="*{articleName}" class="form-control text-secondary" id="articleName">
+            <div th:if="${#fields.hasErrors('articleName')}" th:errors="*{articleName}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="articleContent" class="form-label">文章内容</label>
             <textarea th:field="*{articleContent}" class="form-control text-secondary" id="articleContent" rows="5"></textarea>
+            <div th:if="${#fields.hasErrors('articleContent')}" th:errors="*{articleContent}" class="text-danger"></div>
         </div>
         <div class="mb-3">
             <label for="articleAuthor" class="form-label">文章作者</label>
             <input type="text" th:field="*{articleAuthor}" class="form-control text-secondary" id="articleAuthor">
+            <div th:if="${#fields.hasErrors('articleAuthor')}" th:errors="*{articleAuthor}" class="text-danger"></div>
         </div>
         <button type="submit" class="btn btn-primary">提交</button>
     </form>
