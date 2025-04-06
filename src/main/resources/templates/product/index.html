@@ -47,12 +47,13 @@
                 <td th:text="${product.productPrice}+'元'"></td>
                 <td th:text="${product.productStock}"></td>
                 <td>
-                    <img src="/images/baidu.png" th:alt="${product.productName}" width="100">
+                    <img th:src="'/images/' + ${product.productImg}" th:alt="${product.productName}" width="100">
                 </td>
                 <td th:text="${#dates.format(product.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
                     <a th:href="'/product/edit/' + ${product.productId}" role="button" class="btn btn-outline-primary btn-sm">编辑</a>
-                    <!--                    <a th:href="'/product/delete/' + ${product.productId}">删除</a>-->
+                    <!-- 添加详情按钮 -->
+                    <a th:href="'/product/' + ${product.productId}" role="button" class="btn btn-outline-secondary btn-sm">详情</a>
                 </td>
             </tr>
             </tbody>

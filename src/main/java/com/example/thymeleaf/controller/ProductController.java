@@ -67,4 +67,12 @@ public class ProductController {
         productService.save(product);
         return "redirect:/product";
     }
+
+    // 添加商品详情页处理方法
+    @GetMapping("/{productId}")
+    public String detail(@PathVariable("productId") Long productId, Model model) {
+        Product product = productService.getById(productId);
+        model.addAttribute("product", product);
+        return "/product/detail";
+    }
 }
